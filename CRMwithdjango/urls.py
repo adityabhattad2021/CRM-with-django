@@ -14,8 +14,34 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import path,include
+from leads.views import HomePageView,SignUpView
+from django.contrib.auth.views import LoginView,LogoutView,PasswordResetView,PasswordResetConfirmView,PasswordResetDoneView,PasswordResetCompleteView
+
+
 
 urlpatterns = [
+    path('',HomePageView.as_view(),name='main-page'),
+    path('leads/',include('leads.urls',namespace='leads')),
+    path('agents/',include('agents.urls',namespace='agents')),
+    path('login/',LoginView.as_view(),name='login-page'),
+    path('logout/',LogoutView.as_view(),name='logout'),
+    path('signup/',SignUpView.as_view(),name='signup-page'),
+    
+    path('reset-password/',PasswordResetView.as_view(),name='resetpassword-page'),
+
+    path('reset-password-done/',PasswordResetDoneView.as_view(),name='password_reset_done'),
+
+    path('reset-password-confirm/<uidb64>/<token>/',PasswordResetConfirmView.as_view(),name='password_reset_confirm'),
+
+    path('reset-password-complete/',PasswordResetCompleteView.as_view(),name='password_reset_complete'),
+
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns+= static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+
+

@@ -1,0 +1,44 @@
+<header class="text-gray-400 bg-gray-900 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        {% if request.user.is_authenticated %}
+        <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
+            <p class="mr-5">Logged in as {{request.user.username}},</p>
+            <a href="{% url 'logout' %}" class="mr-5 hover:text-white">Logout</a>
+        </nav>
+
+        {% else %}
+        <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
+            <a href="{% url 'login-page' %}" class="mr-5 hover:text-white">Login</a>
+            <a href="{% url 'signup-page' %}" class="mr-5 hover:text-white">Sign up</a>
+        </nav>
+        {% endif %}
+        <a href="{% url 'main-page' %}"
+            class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-white lg:items-center lg:justify-center mb-4 md:mb-0">
+
+            <span class="ml-5 text-xl xl:block lg:hidden">CRM with Django</span></a>
+        <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
+            <a href="{% url 'leads:leads-page' %}">
+                <button
+                    class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">All
+                    Leads
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </a>
+            {% if request.user.is_organisor %}
+            <a href="{% url 'agents:agents-page' %}">
+                <button
+                    class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 mx-5 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">All
+                    Agents
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</header>

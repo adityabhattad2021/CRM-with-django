@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-col text-center w-full mb-20">
+            <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Categories</h1>
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">These categories segment the Leads</p>
+        </div>
+        <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+            <table class="table-auto w-full text-left whitespace-no-wrap">
+                <thead>
+                    <tr>
+                        <th
+                            class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                            Name</th>
+                        <th
+                            class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                            <a href="#">New</a></th>
+                        {% for category in catogery_list%}
+                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                            <a class="hover:text-blue-500" href="{% url 'leads:category-detail' category.id %}">{{category}}</a>
+                        </th>
+                        {% endfor %}
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="px-4 py-3 text-lg text-gray-900">Count</td>
+                        <td class="px-4 py-3 text-lg text-gray-900">{{unassigned_lead_count}}</td>
+                        {% for category in catogery_list%}
+                        <td class="px-4 py-3">{{category.leads.count}}</td>
+                        {% endfor %}
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-center my-10">
+
+            <a href="{% url 'leads:leads-page' %}"><button
+                    class="flex px-6 text-white bg-black border-0 py-2 center focus:outline-none hover:bg-black rounded">All
+                    Leads</button>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
